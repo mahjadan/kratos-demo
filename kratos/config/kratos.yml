@@ -1,0 +1,129 @@
+version: v0.6.0-alpha.2
+
+dsn: postgres://test:test@postgresdb:5432/test?sslmode=disable&max_conns=20&max_idle_conns=4
+
+dev: true
+
+serve:
+  public:
+    base_url: http://127.0.0.1:4433/
+    cors:
+      enabled: true
+      debug: true
+      allow_credentials: true
+      options_passthrough: true
+      max_age: 0
+      allowed_origins:
+        - http://127.0.0.1:5050
+        - http://kratos.local:5050 # added this to /etc/hosts -> i had cors problems and with this it works, not sure how
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+      allowed_headers:
+        - Authorization
+        - Content-Type
+        - X-Session-Token
+        - Cookie
+        - Origin
+      exposed_headers:
+        - Content-Type
+        - Content-Length
+        - Content-Range
+        - User-Agent
+        - Cache-Control
+        - Set-Cookie
+        - Authorization
+        - X-Session-Token
+        - X-CSRF-Token
+        - X-XSRF-Token
+        - Cookie
+        - Origin
+        - Access-Controll-Allow-Origins
+        - Access-Controll-Allow-Headers
+        - Access-Controll-Allow-Methods
+  admin:
+    base_url: http://127.0.0.1:4434/
+
+selfservice:
+  default_browser_return_url: http://127.0.0.1:5050/
+  whitelisted_return_urls:
+    - http://127.0.0.1:5050/auth/login
+    - http://127.0.0.1:5050/
+    - http://127.0.0.1:5050/dashboard
+  methods:
+    password:
+      enabled: true
+    oidc:
+      enabled: true
+    link:
+      enabled: true
+  flows:
+    error:
+      ui_url: http://127.0.0.1:5050/error
+    settings:
+      ui_url: http://127.0.0.1:5050/auth/settings
+      privileged_session_max_age: 15m
+    recovery:
+      enabled: true
+      ui_url: http://127.0.0.1:5050/auth/recovery
+      after:
+        default_browser_return_url: http://127.0.0.1:5050/auth/login
+    verification:
+      enabled: true
+      ui_url: http://127.0.0.1:5050/auth/verify
+      after:
+        default_browser_return_url: http://127.0.0.1:5050/
+    logout:
+      after:
+        default_browser_return_url: http://127.0.0.1:5050/auth/login
+    login:
+      ui_url: http://127.0.0.1:5050/auth/login
+      lifespan: 10m
+    registration:
+      lifespan: 10m
+      ui_url: http://127.0.0.1:5050/auth/registration
+      after:
+        password:
+          hooks:
+            - hook: session
+          default_browser_return_url: http://127.0.0.1:3000/login
+        default_browser_return_url: http://127.0.0.1:3000/login
+        oidc:
+          hooks:
+            - hook: session
+
+log:
+  level: debug
+  format: text
+  leak_sensitive_values: true
+
+secrets:
+  cookie:
+    - deVuA0F46ZWFh3v4wGPVEQDlVXMbLKzG
+
+session:
+  lifespan: 24h
+  cookie:
+    domain: http://127.0.0.1:5050
+    same_site: Lax
+
+hashers:
+  argon2:
+    parallelism: 1
+    memory: 128MB
+    iterations: 2
+    salt_length: 16
+    key_length: 16
+
+identity:
+  default_schema_url: file:///etc/config/kratos/identity.schema.json
+
+courier:
+  smtp:
+    connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+    from_name: test
+    from_address: office@test.org

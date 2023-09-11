@@ -1,0 +1,47 @@
+{
+  "name": "ory-kratos-test",
+  "private": true,
+  "version": "1.1.0",
+  "description": "",
+  "author": "Danko Petrovic <dp24031995@gmail.com",
+  "keywords": [],
+  "license": "0BSD",
+  "scripts": {
+    "dev": "gatsby develop -p 5050",
+    "start": "npm run dev",
+    "build": "gatsby build",
+    "serve": "gatsby serve -p 5050",
+    "clean": "gatsby clean",
+    "format": "prettier --write src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "dependencies": {
+    "@ory/kratos-client": "^0.6.0-alpha.2",
+    "gatsby": "^3.3.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "@types/node": "^14.14.34",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-helmet": "^6.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-import-resolver-babel-module": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "gatsby-plugin-react-svg": "^3.0.1",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.3"
+  }
+}
